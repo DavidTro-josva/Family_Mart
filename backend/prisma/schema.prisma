@@ -1,0 +1,886 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  CASHIER
+  INVENTORY_CLERK
+}
+
+model User {
+  id                      String                 @id @default(uuid())
+  email                   String                 @unique
+  username                String                 @unique
+  passwordHash            String
+  pinHash                 String? // Pin for quick cashier override/auth
+  role                    Role                   @default(CASHIER)
+  isActive                Boolean                @default(true)
+  failedLogins            Int                    @default(0)
+  lockoutUntil            DateTime?
+  resetToken              String?                @unique
+  resetTokenExpires       DateTime?
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  sessions                Session[]
+  auditLogs               AuditLog[]
+  employee                Employee?
+  inventoryTransactions   InventoryTransaction[]
+  invoices                Invoice[]
+  registerSessions        RegisterSession[]
+  createdPOs              PurchaseOrder[]        @relation("POCreator")
+  approvedPOs             PurchaseOrder[]        @relation("POApprover")
+  poTimelineEvents        POTimelineEvent[]
+  receivedReceipts        GoodsReceipt[]         @relation("GRNReceiver")
+  inspectedReceipts       GoodsReceipt[]         @relation("GRNInspector")
+  createdTransfers        StockTransfer[]        @relation("TransferCreator")
+  approvedTransfers       StockTransfer[]        @relation("TransferApprover")
+  dispatchedTransfers     StockTransfer[]        @relation("TransferDispatcher")
+  receivedTransfers       StockTransfer[]        @relation("TransferReceiver")
+  createdReturns          CustomerReturn[]       @relation("ReturnCreator")
+  processedReturns        CustomerReturn[]       @relation("ReturnProcessor")
+  createdSupplierInvoices SupplierInvoice[]      @relation("InvoiceCreator")
+  supplierPayments        SupplierPayment[]      @relation("APPaymentCreator")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshToken String   @unique
+  expiresAt    DateTime
+  userAgent    String?
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+}
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  eventType     String // e.g., AUTH_LOGIN, INVENTORY_ADJUST, SALE_CREATE
+  description   String
+  correlationId String // Group related logs (e.g., across HTTP request lifecycle)
+  ipAddress     String?
+  metadata      Json? // Contextual payload details
+  createdAt     DateTime @default(now())
+
+  @@index([eventType])
+  @@index([correlationId])
+}
+
+model Category {
+  id            String        @id @default(uuid())
+  name          String        @unique
+  description   String?
+  subCategories SubCategory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model SubCategory {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([name, categoryId])
+}
+
+model Brand {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Unit {
+  id           String    @id @default(uuid())
+  name         String    @unique // e.g., Kilogram, Piece
+  abbreviation String    @unique // e.g., Kg, Pcs
+  products     Product[]
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model GstCategory {
+  id          String    @id @default(uuid())
+  name        String    @unique // e.g., GST 18%
+  rate        Float // e.g., 18.0
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model PaymentType {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BankAccount {
+  id            String   @id @default(uuid())
+  accountName   String
+  accountNumber String   @unique
+  bankName      String
+  branch        String?
+  ifscCode      String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum SupplierStatus {
+  ACTIVE
+  INACTIVE
+  BLACKLISTED
+}
+
+enum POStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  SENT
+  PARTIAL
+  COMPLETE
+  CANCELLED
+}
+
+model Supplier {
+  id                 String            @id @default(uuid())
+  name               String            @unique
+  contactName        String?
+  phone              String?
+  email              String?
+  gstIn              String?           @unique
+  pan                String?           @unique
+  address            String?
+  creditPeriod       Int               @default(0) // in days
+  creditLimit        Float             @default(0.0)
+  category           String            @default("General")
+  bankDetails        Json              @default("{}")
+  defaultCurrency    String            @default("INR")
+  status             SupplierStatus    @default(ACTIVE)
+  notes              String?
+  performanceRating  Float             @default(5.0)
+  isActive           Boolean           @default(true)
+  products           Product[]
+  purchaseOrders     PurchaseOrder[]
+  goodsReceipts      GoodsReceipt[]
+  outstandingBalance Float             @default(0.0)
+  invoices           SupplierInvoice[]
+  ledgerEntries      SupplierLedger[]
+  payments           SupplierPayment[]
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+model Customer {
+  id                 String           @id @default(uuid())
+  name               String
+  phone              String           @unique
+  email              String?
+  address            String?
+  creditLimit        Float            @default(0.0)
+  outstandingBalance Float            @default(0.0)
+  isActive           Boolean          @default(true)
+  invoices           Invoice[]
+  ledgerEntries      CustomerLedger[]
+  returns            CustomerReturn[]
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+}
+
+model Employee {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName   String
+  lastName    String
+  phone       String?
+  designation String
+  salary      Float    @default(0.0)
+  joiningDate DateTime @default(now())
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id                    String                 @id @default(uuid())
+  name                  String
+  description           String?
+  barcode               String                 @unique
+  hsnCode               String?
+  costPrice             Float                  @default(0.0)
+  mrp                   Float                  @default(0.0)
+  sellingPrice          Float                  @default(0.0)
+  minStock              Int                    @default(0)
+  reorderLevel          Int                    @default(0)
+  openingStock          Int                    @default(0)
+  unitId                String
+  unit                  Unit                   @relation(fields: [unitId], references: [id])
+  subCategoryId         String
+  subCategory           SubCategory            @relation(fields: [subCategoryId], references: [id])
+  brandId               String
+  brand                 Brand                  @relation(fields: [brandId], references: [id])
+  gstCategoryId         String
+  gstCategory           GstCategory            @relation(fields: [gstCategoryId], references: [id])
+  supplierId            String
+  supplier              Supplier               @relation(fields: [supplierId], references: [id])
+  imagePath             String?
+  isActive              Boolean                @default(true)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  warehouseStocks       WarehouseStock[]
+  inventoryTransactions InventoryTransaction[]
+  invoiceItems          InvoiceItem[]
+  purchaseOrderItems    PurchaseOrderItem[]
+  goodsReceiptItems     GoodsReceiptItem[]
+  fifoLayers            FifoLayer[]
+  fifoConsumptions      FifoConsumption[]
+  transferItems         StockTransferItem[]
+  returnItems           CustomerReturnItem[]
+  supplierInvoiceItems  SupplierInvoiceItem[]
+
+  @@index([barcode])
+}
+
+enum TransactionType {
+  ADDITION
+  REMOVAL
+  ADJUSTMENT
+  DAMAGE
+  EXPIRY
+  SALE
+  PURCHASE
+  RETURN
+}
+
+model Warehouse {
+  id                    String                 @id @default(uuid())
+  name                  String                 @unique
+  code                  String                 @unique // e.g., WH-MAIN
+  address               String?
+  isActive              Boolean                @default(true)
+  warehouseStocks       WarehouseStock[]
+  inventoryTransactions InventoryTransaction[]
+  purchaseOrders        PurchaseOrder[]
+  goodsReceipts         GoodsReceipt[]
+  fifoLayers            FifoLayer[]
+  fifoConsumptions      FifoConsumption[]
+  sourceTransfers       StockTransfer[]        @relation("SourceWarehouse")
+  destinationTransfers  StockTransfer[]        @relation("DestinationWarehouse")
+  returns               CustomerReturn[]
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+}
+
+model WarehouseStock {
+  id           String    @id @default(uuid())
+  productId    String
+  product      Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  warehouseId  String
+  warehouse    Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  quantity     Int       @default(0)
+  binCode      String? // Location within warehouse, e.g., AISLE-1-SHELF-2
+  reorderLevel Int       @default(5)
+  minStock     Int       @default(2)
+  version      Int       @default(1) // Optimistic locking
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([productId, warehouseId])
+}
+
+model InventoryTransaction {
+  id               String            @id @default(uuid())
+  productId        String
+  product          Product           @relation(fields: [productId], references: [id])
+  warehouseId      String
+  warehouse        Warehouse         @relation(fields: [warehouseId], references: [id])
+  type             TransactionType
+  quantity         Int // Positive for additions, negative for removals
+  previousStock    Int
+  newStock         Int
+  reason           String?
+  correlationId    String // Links to audit log / billing transaction
+  createdByUserId  String?
+  user             User?             @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+  fifoConsumptions FifoConsumption[]
+  createdAt        DateTime          @default(now())
+
+  @@index([productId])
+  @@index([warehouseId])
+  @@index([correlationId])
+}
+
+enum PaymentMethod {
+  CASH
+  UPI
+  CARD
+  SPLIT
+}
+
+enum InvoiceStatus {
+  PAID
+  CANCELLED
+  REFUNDED
+}
+
+model Invoice {
+  id             String           @id @default(uuid())
+  invoiceNumber  String           @unique // e.g. INV-YYYYMMDD-XXXX
+  customerId     String?
+  customer       Customer?        @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  subTotal       Float            @default(0.0)
+  discount       Float            @default(0.0)
+  taxAmount      Float            @default(0.0)
+  grandTotal     Float            @default(0.0)
+  paymentMethod  PaymentMethod    @default(CASH)
+  paymentDetails Json? // Cash received, change, split amounts, card ref
+  cashierId      String
+  cashier        User             @relation(fields: [cashierId], references: [id])
+  status         InvoiceStatus    @default(PAID)
+  items          InvoiceItem[]
+  ledgerEntries  CustomerLedger[]
+  returns        CustomerReturn[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([invoiceNumber])
+  @@index([customerId])
+}
+
+model InvoiceItem {
+  id               String            @id @default(uuid())
+  invoiceId        String
+  invoice          Invoice           @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  productId        String
+  product          Product           @relation(fields: [productId], references: [id])
+  quantity         Int
+  unitPrice        Float
+  costPrice        Float // Cost price snapshot for profit calculations
+  gstRate          Float // GST rate snapshot (e.g. 18.0)
+  gstAmount        Float // GST amount snapshot
+  discount         Float             @default(0.0) // Item-level discount
+  total            Float // Quantity * unitPrice + gstAmount - discount
+  fifoConsumptions FifoConsumption[]
+  createdAt        DateTime          @default(now())
+
+  @@index([invoiceId])
+  @@index([productId])
+}
+
+enum LedgerEntryType {
+  CREDIT
+  PAYMENT
+  REFUND
+}
+
+enum RegisterStatus {
+  OPEN
+  CLOSED
+}
+
+enum RegTxType {
+  CASH_IN
+  CASH_OUT
+  SAFE_DROP
+}
+
+model CustomerLedger {
+  id              String          @id @default(uuid())
+  customerId      String
+  customer        Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  type            LedgerEntryType
+  amount          Float
+  previousBalance Float
+  newBalance      Float
+  invoiceId       String?
+  invoice         Invoice?        @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  notes           String?
+  correlationId   String
+  createdAt       DateTime        @default(now())
+
+  @@index([customerId])
+  @@index([correlationId])
+}
+
+model RegisterSession {
+  id           String                @id @default(uuid())
+  cashierId    String
+  cashier      User                  @relation(fields: [cashierId], references: [id])
+  openedAt     DateTime              @default(now())
+  closedAt     DateTime?
+  openingFloat Float                 @default(0.0)
+  expectedCash Float                 @default(0.0)
+  actualCash   Float                 @default(0.0)
+  variance     Float                 @default(0.0)
+  status       RegisterStatus        @default(OPEN)
+  notes        String?
+  transactions RegisterTransaction[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+
+  @@index([cashierId])
+}
+
+model RegisterTransaction {
+  id          String          @id @default(uuid())
+  sessionId   String
+  session     RegisterSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  type        RegTxType
+  amount      Float
+  description String?
+  createdAt   DateTime        @default(now())
+
+  @@index([sessionId])
+}
+
+model PurchaseOrder {
+  id                   String              @id @default(uuid())
+  poNumber             String              @unique // e.g. PO-YYYYMMDD-XXXX
+  supplierId           String
+  supplier             Supplier            @relation(fields: [supplierId], references: [id])
+  status               POStatus            @default(DRAFT)
+  version              Int                 @default(1)
+  totalAmount          Float               @default(0.0)
+  approvalComments     String?
+  warehouseId          String
+  warehouse            Warehouse           @relation(fields: [warehouseId], references: [id])
+  expectedDeliveryDate DateTime
+  createdById          String
+  creator              User                @relation("POCreator", fields: [createdById], references: [id])
+  approvedById         String?
+  approver             User?               @relation("POApprover", fields: [approvedById], references: [id])
+  items                PurchaseOrderItem[]
+  timeline             POTimelineEvent[]
+  goodsReceipts        GoodsReceipt[]
+  supplierInvoices     SupplierInvoice[]
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  @@index([poNumber])
+  @@index([supplierId])
+}
+
+model PurchaseOrderItem {
+  id               String        @id @default(uuid())
+  purchaseOrderId  String
+  purchaseOrder    PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  productId        String
+  product          Product       @relation(fields: [productId], references: [id])
+  quantity         Int
+  unitCost         Float
+  taxRate          Float         @default(0.0) // e.g. 18.0
+  taxAmount        Float         @default(0.0)
+  discountAmount   Float         @default(0.0)
+  totalCost        Float
+  receivedQuantity Int           @default(0) // Updated during Goods Receipt (GRN)
+  remarks          String?
+  createdAt        DateTime      @default(now())
+
+  @@index([purchaseOrderId])
+  @@index([productId])
+}
+
+model POTimelineEvent {
+  id              String        @id @default(uuid())
+  purchaseOrderId String
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  status          POStatus
+  description     String
+  createdById     String
+  user            User          @relation(fields: [createdById], references: [id])
+  createdAt       DateTime      @default(now())
+
+  @@index([purchaseOrderId])
+}
+
+enum GRNStatus {
+  DRAFT
+  PENDING_INSPECTION
+  COMPLETED
+  REJECTED
+}
+
+enum ReceiptItemStatus {
+  PASSED
+  FAILED
+  QUARANTINE
+  DAMAGED
+  EXPIRED
+}
+
+model GoodsReceipt {
+  id               String             @id @default(uuid())
+  grnNumber        String             @unique // e.g. GRN-YYYYMMDD-XXXX
+  purchaseOrderId  String?
+  purchaseOrder    PurchaseOrder?     @relation(fields: [purchaseOrderId], references: [id], onDelete: SetNull)
+  supplierId       String
+  supplier         Supplier           @relation(fields: [supplierId], references: [id])
+  warehouseId      String
+  warehouse        Warehouse          @relation(fields: [warehouseId], references: [id])
+  status           GRNStatus          @default(DRAFT)
+  receivedById     String
+  receivedBy       User               @relation("GRNReceiver", fields: [receivedById], references: [id])
+  inspectedById    String?
+  inspectedBy      User?              @relation("GRNInspector", fields: [inspectedById], references: [id])
+  remarks          String?
+  items            GoodsReceiptItem[]
+  supplierInvoices SupplierInvoice[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@index([grnNumber])
+  @@index([purchaseOrderId])
+  @@index([supplierId])
+}
+
+model GoodsReceiptItem {
+  id               String            @id @default(uuid())
+  goodsReceiptId   String
+  goodsReceipt     GoodsReceipt      @relation(fields: [goodsReceiptId], references: [id], onDelete: Cascade)
+  productId        String
+  product          Product           @relation(fields: [productId], references: [id])
+  quantityOrdered  Int               @default(0)
+  quantityReceived Int
+  quantityAccepted Int               @default(0)
+  quantityRejected Int               @default(0)
+  status           ReceiptItemStatus @default(PASSED)
+  binCode          String? // Target bin inside the warehouse
+  remarks          String?
+  createdAt        DateTime          @default(now())
+
+  @@index([goodsReceiptId])
+  @@index([productId])
+}
+
+model FifoLayer {
+  id                String            @id @default(uuid())
+  productId         String
+  product           Product           @relation(fields: [productId], references: [id])
+  warehouseId       String
+  warehouse         Warehouse         @relation(fields: [warehouseId], references: [id])
+  grnItemId         String? // Optional link to GRN Item
+  batchNumber       String? // Supplier batch number
+  lotNumber         String? // Lot tracking
+  expiryDate        DateTime?
+  manufacturingDate DateTime?
+  originalQuantity  Int
+  remainingQuantity Int
+  unitCost          Float
+  landedCost        Float             @default(0.0)
+  consumptions      FifoConsumption[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([productId])
+  @@index([warehouseId])
+  @@index([expiryDate])
+}
+
+model FifoConsumption {
+  id                     String                @id @default(uuid())
+  productId              String
+  product                Product               @relation(fields: [productId], references: [id])
+  warehouseId            String
+  warehouse              Warehouse             @relation(fields: [warehouseId], references: [id])
+  fifoLayerId            String
+  fifoLayer              FifoLayer             @relation(fields: [fifoLayerId], references: [id], onDelete: Cascade)
+  invoiceItemId          String?
+  invoiceItem            InvoiceItem?          @relation(fields: [invoiceItemId], references: [id], onDelete: SetNull)
+  inventoryTransactionId String?
+  inventoryTransaction   InventoryTransaction? @relation(fields: [inventoryTransactionId], references: [id], onDelete: SetNull)
+  quantityConsumed       Int
+  unitCost               Float
+  createdAt              DateTime              @default(now())
+
+  @@index([fifoLayerId])
+  @@index([invoiceItemId])
+}
+
+enum TransferStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  DISPATCHED
+  RECEIVED
+  CANCELLED
+}
+
+enum TransferItemStatus {
+  PENDING
+  DISPATCHED
+  RECEIVED
+  DAMAGED
+  LOST
+}
+
+model StockTransfer {
+  id                     String              @id @default(uuid())
+  transferNumber         String              @unique // e.g. TR-YYYYMMDD-XXXX
+  sourceWarehouseId      String
+  sourceWarehouse        Warehouse           @relation("SourceWarehouse", fields: [sourceWarehouseId], references: [id])
+  destinationWarehouseId String
+  destinationWarehouse   Warehouse           @relation("DestinationWarehouse", fields: [destinationWarehouseId], references: [id])
+  status                 TransferStatus      @default(DRAFT)
+  createdById            String
+  createdBy              User                @relation("TransferCreator", fields: [createdById], references: [id])
+  approvedById           String?
+  approvedBy             User?               @relation("TransferApprover", fields: [approvedById], references: [id])
+  dispatchedById         String?
+  dispatchedBy           User?               @relation("TransferDispatcher", fields: [dispatchedById], references: [id])
+  receivedById           String?
+  receivedBy             User?               @relation("TransferReceiver", fields: [receivedById], references: [id])
+  remarks                String?
+  items                  StockTransferItem[]
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+
+  @@index([transferNumber])
+  @@index([sourceWarehouseId])
+  @@index([destinationWarehouseId])
+}
+
+model StockTransferItem {
+  id                 String             @id @default(uuid())
+  stockTransferId    String
+  stockTransfer      StockTransfer      @relation(fields: [stockTransferId], references: [id], onDelete: Cascade)
+  productId          String
+  product            Product            @relation(fields: [productId], references: [id])
+  quantityRequested  Int
+  quantityDispatched Int                @default(0)
+  quantityReceived   Int                @default(0)
+  quantityDamaged    Int                @default(0)
+  quantityLost       Int                @default(0)
+  status             TransferItemStatus @default(PENDING)
+  remarks            String?
+  createdAt          DateTime           @default(now())
+
+  @@index([stockTransferId])
+  @@index([productId])
+}
+
+enum ReturnStatus {
+  PENDING_INSPECTION
+  COMPLETED
+  REJECTED
+}
+
+enum ReturnReason {
+  DAMAGED
+  DEFECTIVE
+  WRONG_ITEM
+  CHANGE_OF_MIND
+}
+
+enum RefundMethod {
+  CASH
+  CREDIT_NOTE
+  ORIGINAL_PAYMENT
+}
+
+enum ReturnAction {
+  RETURN_TO_STOCK
+  WRITE_OFF
+  RETURN_TO_SUPPLIER
+}
+
+model CustomerReturn {
+  id            String               @id @default(uuid())
+  returnNumber  String               @unique // e.g. RMA-YYYYMMDD-XXXX
+  invoiceId     String
+  invoice       Invoice              @relation(fields: [invoiceId], references: [id])
+  customerId    String?
+  customer      Customer?            @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  warehouseId   String
+  warehouse     Warehouse            @relation(fields: [warehouseId], references: [id])
+  status        ReturnStatus         @default(PENDING_INSPECTION)
+  refundMethod  RefundMethod         @default(CASH)
+  refundAmount  Float                @default(0.0)
+  createdById   String
+  createdBy     User                 @relation("ReturnCreator", fields: [createdById], references: [id])
+  processedById String?
+  processedBy   User?                @relation("ReturnProcessor", fields: [processedById], references: [id])
+  remarks       String?
+  items         CustomerReturnItem[]
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  @@index([returnNumber])
+  @@index([invoiceId])
+  @@index([customerId])
+}
+
+model CustomerReturnItem {
+  id               String         @id @default(uuid())
+  customerReturnId String
+  customerReturn   CustomerReturn @relation(fields: [customerReturnId], references: [id], onDelete: Cascade)
+  productId        String
+  product          Product        @relation(fields: [productId], references: [id])
+  quantity         Int
+  reason           ReturnReason
+  action           ReturnAction   @default(RETURN_TO_STOCK)
+  unitRefundAmount Float
+  remarks          String?
+  createdAt        DateTime       @default(now())
+
+  @@index([customerReturnId])
+  @@index([productId])
+}
+
+enum SupplierInvoiceStatus {
+  PENDING_MATCH
+  MATCHED
+  VARIANCE_REJECTED
+  POSTED
+}
+
+enum MatchStatus {
+  PERFECT_MATCH
+  QTY_VARIANCE
+  PRICE_VARIANCE
+  TAX_VARIANCE
+  MULTI_VARIANCE
+}
+
+enum SupplierLedgerEntryType {
+  INVOICE
+  PAYMENT
+  DEBIT_NOTE
+  ADVANCE
+}
+
+model SupplierInvoice {
+  id              String                @id @default(uuid())
+  invoiceNumber   String // Supplier's invoice number
+  invoiceDate     DateTime
+  supplierId      String
+  supplier        Supplier              @relation(fields: [supplierId], references: [id])
+  purchaseOrderId String?
+  purchaseOrder   PurchaseOrder?        @relation(fields: [purchaseOrderId], references: [id], onDelete: SetNull)
+  goodsReceiptId  String?
+  goodsReceipt    GoodsReceipt?         @relation(fields: [goodsReceiptId], references: [id], onDelete: SetNull)
+  subTotal        Float                 @default(0.0)
+  taxAmount       Float                 @default(0.0)
+  grandTotal      Float                 @default(0.0)
+  status          SupplierInvoiceStatus @default(PENDING_MATCH)
+  matchStatus     MatchStatus           @default(PERFECT_MATCH)
+  receivedDate    DateTime              @default(now())
+  dueDate         DateTime
+  createdById     String
+  createdBy       User                  @relation("InvoiceCreator", fields: [createdById], references: [id])
+  remarks         String?
+  items           SupplierInvoiceItem[]
+  ledgerEntries   SupplierLedger[]
+  payments        SupplierPayment[]
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@unique([supplierId, invoiceNumber])
+  @@index([supplierId])
+  @@index([purchaseOrderId])
+  @@index([goodsReceiptId])
+}
+
+model SupplierInvoiceItem {
+  id                String          @id @default(uuid())
+  supplierInvoiceId String
+  supplierInvoice   SupplierInvoice @relation(fields: [supplierInvoiceId], references: [id], onDelete: Cascade)
+  productId         String
+  product           Product         @relation(fields: [productId], references: [id])
+  quantity          Int
+  unitPrice         Float
+  taxAmount         Float           @default(0.0)
+  total             Float
+
+  @@index([supplierInvoiceId])
+  @@index([productId])
+}
+
+model SupplierLedger {
+  id              String                  @id @default(uuid())
+  supplierId      String
+  supplier        Supplier                @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  type            SupplierLedgerEntryType
+  amount          Float
+  previousBalance Float
+  newBalance      Float
+  invoiceId       String?
+  invoice         SupplierInvoice?        @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  notes           String?
+  correlationId   String
+  createdAt       DateTime                @default(now())
+
+  @@index([supplierId])
+  @@index([correlationId])
+}
+
+enum SupplierPaymentMethod {
+  CASH
+  UPI
+  BANK_TRANSFER
+  CHEQUE
+}
+
+model SupplierPayment {
+  id              String                @id @default(uuid())
+  paymentNumber   String                @unique // e.g. PV-YYYYMMDD-XXXX
+  supplierId      String
+  supplier        Supplier              @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  invoiceId       String?
+  invoice         SupplierInvoice?      @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  amount          Float
+  paymentDate     DateTime              @default(now())
+  paymentMethod   SupplierPaymentMethod
+  referenceNumber String? // transaction/cheque ref
+  notes           String?
+  createdById     String
+  createdBy       User                  @relation("APPaymentCreator", fields: [createdById], references: [id])
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([supplierId])
+  @@index([invoiceId])
+}
+
+model IdempotencyKey {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  response  Json
+  createdAt DateTime @default(now())
+}
+
+enum AlertSeverity {
+  INFO
+  WARNING
+  CRITICAL
+}
+
+model Alert {
+  id        String        @id @default(uuid())
+  title     String
+  message   String
+  severity  AlertSeverity @default(INFO)
+  category  String // e.g., 'STOCK', 'FINANCIAL', 'SECURITY', 'DISCOUNT'
+  isRead    Boolean       @default(false)
+  createdAt DateTime      @default(now())
+}

@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans selection:bg-brand-blue-500/20 selection:text-brand-blue-700;
+  }
+}
+
+@layer components {
+  /* Premium glassmorphism card */
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-premium rounded-2xl;
+  }
+  
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:shadow-premium-hover hover:-translate-y-0.5;
+  }
+
+  /* Custom input styles for forms */
+  .form-input {
+    @apply w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue-500/20 focus:border-brand-blue-500 transition-all duration-200 text-slate-800;
+  }
+
+  /* Premium Buttons */
+  .btn-primary {
+    @apply px-5 py-2.5 bg-gradient-to-r from-brand-blue-600 to-brand-blue-500 hover:from-brand-blue-700 hover:to-brand-blue-600 text-white font-medium rounded-xl shadow-md shadow-brand-blue-500/10 hover:shadow-lg hover:shadow-brand-blue-500/20 transition-all duration-200 flex items-center justify-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium rounded-xl transition-all duration-200 flex items-center justify-center gap-2;
+  }
+
+  .btn-success {
+    @apply px-5 py-2.5 bg-gradient-to-r from-brand-green-600 to-brand-green-500 hover:from-brand-green-700 hover:to-brand-green-600 text-white font-medium rounded-xl shadow-md shadow-brand-green-500/10 hover:shadow-lg hover:shadow-brand-green-500/20 transition-all duration-200 flex items-center justify-center gap-2;
+  }
+
+  /* Fade-in animation utility */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+}
+
+/* Fade-in keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Scrollbar for modern feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+}
+
+@media print {
+  @page {
+    margin: 0;
+  }
+  html, body, #root {
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
