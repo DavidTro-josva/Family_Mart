@@ -2,6 +2,7 @@ services:
   - type: web
     name: family-mart-backend
     env: node
+    plan: free
     region: ohio
     rootDir: backend
     buildCommand: npm install && npm run prisma:generate && npm run build
