@@ -165,8 +165,10 @@ app.use((err: any, req: express.Request, res: express.Response, _next: express.N
   });
 });
 
-app.listen(PORT, () => {
-  logger.info(`Server is running on port ${PORT} in ${process.env.NODE_ENV} mode`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    logger.info(`Server is running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+  });
+}
 
 export default app;
