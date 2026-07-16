@@ -770,3 +770,113 @@
 [31m    at async import_prisma.default.$transaction.maxWait (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:192:27)[39m
 [31m    at async Proxy._transactionWithCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:8000)[39m
 [31m    at async checkout (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:21:20)[39m
+[2026-07-15 17:34:42:3442] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 17:34:57:3457] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 17:37:07:377] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 17:37:18:3718] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 17:37:25:3725] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 17:39:37:3937] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 17:39:52:3952] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 17:40:47:4047] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 18:54:57:5457] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
+[2026-07-15 18:55:06:556] [31merror[39m: [31mNot allowed by CORS - Stack: Error: Not allowed by CORS[39m
+[31m    at origin (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\app.ts:51:16)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:219:13[39m
+[31m    at optionsCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:199:9)[39m
+[31m    at corsMiddleware (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\cors\lib\index.js:204:7)[39m
+[31m    at Layer.handle [as handle_request] (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\layer.js:95:5)[39m
+[31m    at trim_prefix (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:328:13)[39m
+[31m    at C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:286:9[39m
+[31m    at router.process_params (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:346:12)[39m
+[31m    at next (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\express\lib\router\index.js:280:10)[39m
+[31m    at internalNext (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\helmet\index.cjs:537:6)[39m
