@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --no-package-lock && npm run build"
+  command = "npm install --include=dev --no-package-lock && npm run build"
   publish = "frontend/dist"
   functions = "backend/netlify/functions"
 
