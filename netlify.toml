@@ -1,7 +1,16 @@
 [build]
-  base = "frontend"
   command = "npm run build"
-  publish = "dist"
+  publish = "frontend/dist"
+  functions = "backend/netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["backend/prisma/**", "backend/node_modules/.prisma/**"]
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"

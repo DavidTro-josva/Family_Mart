@@ -944,3 +944,187 @@
 [2026-07-16 11:28:18:2818] [32minfo[39m: [32mServer is running on port 5000 in development mode[39m
 [2026-07-16 11:28:39:2839] [32minfo[39m: [32mServer is running on port 5000 in development mode[39m
 [2026-07-16 11:33:57:3357] [32minfo[39m: [32mServer is running on port 5000 in development mode[39m
+[2026-07-16 14:00:41:041] [31merror[39m: [31m[39m
+[31mInvalid `prisma.user.findFirst()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:36[39m
+
+[31m  25 const validated = loginSchema.parse(req.body);[39m
+[31m  26 const { usernameOrEmail, password } = validated;[39m
+[31m  27 [39m
+[31m→ 28 const user = await prisma.user.findFirst([39m
+[31mCan't reach database server at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`[39m
+
+[31mPlease make sure your database server is running at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`. - Stack: PrismaClientInitializationError: [39m
+[31mInvalid `prisma.user.findFirst()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:36[39m
+
+[31m  25 const validated = loginSchema.parse(req.body);[39m
+[31m  26 const { usernameOrEmail, password } = validated;[39m
+[31m  27 [39m
+[31m→ 28 const user = await prisma.user.findFirst([39m
+[31mCan't reach database server at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`[39m
+
+[31mPlease make sure your database server is running at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`.[39m
+[31m    at $n.handleRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:7615)[39m
+[31m    at $n.handleAndLogRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6623)[39m
+[31m    at $n.request (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6307)[39m
+[31m    at async l (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:9633)[39m
+[31m    at async login (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:18)[39m
+[2026-07-16 15:15:18:1518] [31merror[39m: [31m[39m
+[31mInvalid `prisma.user.findFirst()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:36[39m
+
+[31m  25 const validated = loginSchema.parse(req.body);[39m
+[31m  26 const { usernameOrEmail, password } = validated;[39m
+[31m  27 [39m
+[31m→ 28 const user = await prisma.user.findFirst([39m
+[31mCan't reach database server at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`[39m
+
+[31mPlease make sure your database server is running at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`. - Stack: PrismaClientKnownRequestError: [39m
+[31mInvalid `prisma.user.findFirst()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:36[39m
+
+[31m  25 const validated = loginSchema.parse(req.body);[39m
+[31m  26 const { usernameOrEmail, password } = validated;[39m
+[31m  27 [39m
+[31m→ 28 const user = await prisma.user.findFirst([39m
+[31mCan't reach database server at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`[39m
+
+[31mPlease make sure your database server is running at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`.[39m
+[31m    at $n.handleRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:7315)[39m
+[31m    at $n.handleAndLogRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6623)[39m
+[31m    at $n.request (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6307)[39m
+[31m    at async l (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:9633)[39m
+[31m    at async login (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:18)[39m
+[2026-07-16 15:15:23:1523] [31merror[39m: [31m[39m
+[31mInvalid `prisma.user.findFirst()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:36[39m
+
+[31m  25 const validated = loginSchema.parse(req.body);[39m
+[31m  26 const { usernameOrEmail, password } = validated;[39m
+[31m  27 [39m
+[31m→ 28 const user = await prisma.user.findFirst([39m
+[31mCan't reach database server at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`[39m
+
+[31mPlease make sure your database server is running at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`. - Stack: PrismaClientKnownRequestError: [39m
+[31mInvalid `prisma.user.findFirst()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:36[39m
+
+[31m  25 const validated = loginSchema.parse(req.body);[39m
+[31m  26 const { usernameOrEmail, password } = validated;[39m
+[31m  27 [39m
+[31m→ 28 const user = await prisma.user.findFirst([39m
+[31mCan't reach database server at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`[39m
+
+[31mPlease make sure your database server is running at `ep-hidden-glade-at76qf91-pooler.c-9.us-east-1.aws.neon.tech:5432`.[39m
+[31m    at $n.handleRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:7315)[39m
+[31m    at $n.handleAndLogRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6623)[39m
+[31m    at $n.request (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6307)[39m
+[31m    at async l (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:9633)[39m
+[31m    at async login (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\auth.controller.ts:28:18)[39m
+[2026-07-16 15:18:36:1836] [31merror[39m: [31m[39m
+[31mInvalid `prisma.product.findMany()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:57:22[39m
+
+[31m  54 }[39m
+[31m  55 [39m
+[31m  56 const [products, total] = await Promise.all([[39m
+[31m→ 57   prisma.product.findMany([39m
+[31mServer has closed the connection. - Stack: PrismaClientKnownRequestError: [39m
+[31mInvalid `prisma.product.findMany()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:57:22[39m
+
+[31m  54 }[39m
+[31m  55 [39m
+[31m  56 const [products, total] = await Promise.all([[39m
+[31m→ 57   prisma.product.findMany([39m
+[31mServer has closed the connection.[39m
+[31m    at $n.handleRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:7315)[39m
+[31m    at $n.handleAndLogRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6623)[39m
+[31m    at $n.request (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6307)[39m
+[31m    at async l (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:9633)[39m
+[31m    at async Promise.all (index 0)[39m
+[31m    at async getProducts (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:56:31)[39m
+[2026-07-16 15:18:37:1837] [31merror[39m: [31m[39m
+[31mInvalid `prisma.product.findMany()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:57:22[39m
+
+[31m  54 }[39m
+[31m  55 [39m
+[31m  56 const [products, total] = await Promise.all([[39m
+[31m→ 57   prisma.product.findMany([39m
+[31mServer has closed the connection. - Stack: PrismaClientKnownRequestError: [39m
+[31mInvalid `prisma.product.findMany()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:57:22[39m
+
+[31m  54 }[39m
+[31m  55 [39m
+[31m  56 const [products, total] = await Promise.all([[39m
+[31m→ 57   prisma.product.findMany([39m
+[31mServer has closed the connection.[39m
+[31m    at $n.handleRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:7315)[39m
+[31m    at $n.handleAndLogRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6623)[39m
+[31m    at $n.request (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6307)[39m
+[31m    at async l (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:9633)[39m
+[31m    at async Promise.all (index 0)[39m
+[31m    at async getProducts (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:56:31)[39m
+[2026-07-16 15:18:37:1837] [31merror[39m: [31m[39m
+[31mInvalid `prisma.product.findMany()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:57:22[39m
+
+[31m  54 }[39m
+[31m  55 [39m
+[31m  56 const [products, total] = await Promise.all([[39m
+[31m→ 57   prisma.product.findMany([39m
+[31mServer has closed the connection. - Stack: PrismaClientKnownRequestError: [39m
+[31mInvalid `prisma.product.findMany()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:57:22[39m
+
+[31m  54 }[39m
+[31m  55 [39m
+[31m  56 const [products, total] = await Promise.all([[39m
+[31m→ 57   prisma.product.findMany([39m
+[31mServer has closed the connection.[39m
+[31m    at $n.handleRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:7315)[39m
+[31m    at $n.handleAndLogRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6623)[39m
+[31m    at $n.request (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6307)[39m
+[31m    at async l (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:9633)[39m
+[31m    at async Promise.all (index 0)[39m
+[31m    at async getProducts (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:56:31)[39m
+[2026-07-16 15:19:28:1928] [31merror[39m: [31mInsufficient stock in FIFO layers to consume 1 units of product 7b7b6f70-5fb0-47ac-9bf0-bde96609c9ec - Stack: Error: Insufficient stock in FIFO layers to consume 1 units of product 7b7b6f70-5fb0-47ac-9bf0-bde96609c9ec[39m
+[31m    at FifoService.consumeFifoStock (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\services\fifo.service.ts:109:13)[39m
+[31m    at async import_prisma.default.$transaction.maxWait (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:192:27)[39m
+[31m    at async Proxy._transactionWithCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:8000)[39m
+[31m    at async checkout (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:21:20)[39m
+[2026-07-16 15:20:45:2045] [31merror[39m: [31mInsufficient stock in FIFO layers to consume 1 units of product 7b7b6f70-5fb0-47ac-9bf0-bde96609c9ec - Stack: Error: Insufficient stock in FIFO layers to consume 1 units of product 7b7b6f70-5fb0-47ac-9bf0-bde96609c9ec[39m
+[31m    at FifoService.consumeFifoStock (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\services\fifo.service.ts:109:13)[39m
+[31m    at async import_prisma.default.$transaction.maxWait (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:192:27)[39m
+[31m    at async Proxy._transactionWithCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:8000)[39m
+[31m    at async checkout (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:21:20)[39m
+[2026-07-16 15:20:50:2050] [31merror[39m: [31mInsufficient stock in FIFO layers to consume 1 units of product 7b7b6f70-5fb0-47ac-9bf0-bde96609c9ec - Stack: Error: Insufficient stock in FIFO layers to consume 1 units of product 7b7b6f70-5fb0-47ac-9bf0-bde96609c9ec[39m
+[31m    at FifoService.consumeFifoStock (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\services\fifo.service.ts:109:13)[39m
+[31m    at async import_prisma.default.$transaction.maxWait (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:192:27)[39m
+[31m    at async Proxy._transactionWithCallback (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:8000)[39m
+[31m    at async checkout (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\pos.controller.ts:21:20)[39m
+[2026-07-16 15:23:42:2342] [31merror[39m: [31m[39m
+[31mInvalid `prisma.product.update()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:219:42[39m
+
+[31m  216   });[39m
+[31m  217 }[39m
+[31m  218 [39m
+[31m→ 219 const product = await prisma.product.update([39m
+[31mServer has closed the connection. - Stack: PrismaClientKnownRequestError: [39m
+[31mInvalid `prisma.product.update()` invocation in[39m
+[31mC:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:219:42[39m
+
+[31m  216   });[39m
+[31m  217 }[39m
+[31m  218 [39m
+[31m→ 219 const product = await prisma.product.update([39m
+[31mServer has closed the connection.[39m
+[31m    at $n.handleRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:7315)[39m
+[31m    at $n.handleAndLogRequestError (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6623)[39m
+[31m    at $n.request (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:121:6307)[39m
+[31m    at async l (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\node_modules\@prisma\client\runtime\library.js:130:9633)[39m
+[31m    at async updateProduct (C:\Users\DAVID JOSVA\React Project\family-mart-erp\backend\src\controllers\master.controller.ts:219:21)[39m
